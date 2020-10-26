@@ -10,6 +10,7 @@ class Movies extends CI_Controller {
 
     public function index()
 	{
+        
         $this->load->view('view');
     }
     
@@ -74,9 +75,9 @@ class Movies extends CI_Controller {
 
     function setTypeId($typeName)
     {
-        $this->load->model("Movies_model");
-        $moviesModel = new Movies_model;
-        $type = $moviesModel->getType();
+        $this->load->model("Types_model");
+        $typesModel = new Types_model;
+        $type = $typesModel->getType();
         
         foreach($type as $tp) {
             if ($typeName == $tp->name) {
@@ -88,11 +89,11 @@ class Movies extends CI_Controller {
 
     function setPosterId($poster)
     {
-        $this->load->model("Movies_model");
-        $moviesModel = new Movies_model;
+        $this->load->model("Posters_model");
+        $postersModel = new Posters_model;
 
         $data = array("url" => $poster);
-        return $moviesModel->insertPoster($data);
+        return $postersModel->insertPoster($data);
     }
 
     function checkRecordExist($imdb)

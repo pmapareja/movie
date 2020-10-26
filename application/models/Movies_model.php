@@ -11,22 +11,11 @@ class Movies_model extends CI_Model
 
     }
 
-    public function getType()
-    {
-        $qry = $this->db->get("type");
-        return  $qry->result();
-    }
-
     public function insertDetails($data)
     {
         $this->db->insert("details", $data);
     }
 
-    public function insertPoster($data)
-    {
-        $this->db->insert("poster", $data);
-        return $this->db->insert_id();
-    }
 
     public function checkRecord($imdb)
     {

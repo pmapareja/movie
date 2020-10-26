@@ -57,56 +57,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="h-100">
     <div class="row h-100">
-        <div class="h-100 col-md-2 btn-container">
-            <button  
-                type="button" 
-                id="1" 
-                class="buttons btn btn-primary" 
-            >
-                Matrix
-            </button>
-            <br/>
-            <br/>
-            <button 
-                type="button" 
-                id="2" 
-                class="buttons btn btn-primary"
-            >
-                Matrix Reloaded
-            </button>
-            <br/>
-            <br/>
-            <button 
-                type="button" 
-                id="3" 
-                class="buttons btn btn-primary"
-            >
-                Matrix Revolution
-            </button>
-        </div>
-        <div class="col-md-9 details-container h-100">
-            <table class="table">
-                <thead>
-                    <tr>
-                    <th >Title</th>
-                    <th >Year</th>
-                    <th >IMDB</th>
-                    <th >Type</th>
-                    <th >Poster</th>
-                    </tr>
-                </thead>
-                <tbody id="result-body">
-                   
-                </tbody>
-            </table>
-        </div>
+        <div class="h-100 col-md-2 btn-container"></div>
+        <div class="col-md-9 details-container h-100"></div>
     </div>
 </div>
 
 </body>
 
 <script>
-    $(".buttons").click(function() {
+    var buttons = Array("Matrix", "Matrix Reloaded", "Matrix Revolution");
+
+    var tableHeaders = Array(
+        "Title",
+        "Year",
+        "IMDB",
+        "Type",
+        "Poster"
+    );
+    $(document).ready(function(){
+        generateButtons();
+        generateTable();
+    });
+    
+    function generateButtons() 
+    {
+
+        var btn = "";
+        var cnt = 1;
+        $.each(buttons, function (x, y) {
+            btn += "<button type='button' id='"+ cnt +"' class='buttons btn btn-primary'>";
+            btn += buttons[x];
+            btn += "</button>";
+            btn += "<br/><br/>";
+            cnt++;
+             
+        });
+        $(".btn-container").append(btn);
+    }
+
+    function generateTable() 
+    {
+        var tbl = "";
+        tbl +="<table class='table'>";
+        tbl +="<thead>";
+        tbl +="<tr>";
+        $.each(tableHeaders, function (x, y) {
+            tbl +="<th>"+tableHeaders[x] + "</th>";    
+        })
+        tbl +="</tr>";
+        tbl +="</thead>";
+        tbl +="<tbody id='result-body'>";
+        tbl +="</tbody>";
+        tbl +=" </table>";
+
+        $(".details-container").append(tbl);
+                    
+    }
+    $(document).on('click', '.buttons', function() {
         $("#result-body").html("");
         $(this).each(function () {
             var request = "request?button=" + $(this).attr("id");
@@ -116,6 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 var html = "";
                 
                 if (res.Response) {
+                  
                     var search = res.Search;
                     
                     $.each(search, function(i, val) {
@@ -132,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
                 
             });
-        }) 
-    })
+        });
+    });
 </script>
 </html>
